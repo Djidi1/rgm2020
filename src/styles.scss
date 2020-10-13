@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Roboto';
+  src:  url('./fonts/roboto.woff') format('woff'),
+        url('./fonts/roboto.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Roboto;
+
+  div#root {
+    height: 100%;
+  }
+}
