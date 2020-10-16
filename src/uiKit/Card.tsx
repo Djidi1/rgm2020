@@ -28,7 +28,7 @@ const CardTitle = styled.div`
   flex: 1 0 60%;
 `;
 
-const CardDecription = styled.div`
+const CardDescription = styled.div`
   font-size: 0.8rem;
 `;
 
@@ -43,13 +43,15 @@ const CardYear = styled.div`
 
 const Card: FC<MainProps> = ({
   urlImage, title, description, year,
-}) => <CardWrapper>
+}) => (
+<CardWrapper>
   <CardImage>{urlImage}</CardImage>
   <CardTitle>
     {title}
-    <CardDecription>{description}</CardDecription>
+    <CardDescription>{description}</CardDescription>
   </CardTitle>
   <CardYear>{year}</CardYear>
-</CardWrapper>;
+</CardWrapper>
+);
 
 export default Card;
