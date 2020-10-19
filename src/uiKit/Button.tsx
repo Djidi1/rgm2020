@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface ButtonProps {
   primary?: boolean,
+  withBorder?: boolean,
 }
 
 const Button = styled.button<ButtonProps>`
@@ -9,7 +10,7 @@ const Button = styled.button<ButtonProps>`
   color: ${(props) => (props.primary ? '#fff' : '#f65261')};
   cursor: pointer;
   border-radius: 3px;
-  border: none;
+  border:  ${(props) => (props.withBorder ? '1px solid #f65261' : '0')};
   margin: 0.5em 1em;
   padding: .75em 1em;
   text-transform: uppercase;

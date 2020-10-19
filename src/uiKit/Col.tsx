@@ -7,6 +7,7 @@ interface ColProps {
 }
 
 const Col = styled('div')<ColProps>`
+  display: flex;
   flex: 1 0 ${({ width }) => width || '100%'};
   flex-flow: column nowrap;
   max-width: 100%;

@@ -1,14 +1,17 @@
-import React, { FC } from 'react'; // we need this to make JSX compile
+import React, { FC, useState } from 'react'; // we need this to make JSX compile
 import styled from 'styled-components';
 import {
   Button,
   Container,
   Col,
+  FormControl,
   Row,
   Image,
-  Input,
+  Field,
 } from '../../uiKit';
 import Logo from '../../img/logo.png';
+import Dialog from '../../uiKit/Dialog';
+import { dialogFields } from '../../helpers/constants';
 
 const HeadWrapper = styled.div`
   background: grey;
@@ -27,15 +30,37 @@ const HeaderTitle = styled.h1`
 type HeaderProps = {
 }
 
-export const Header: FC<HeaderProps> = () => (
+const DialogAddMovieActions = (
+  <>
+    <Button withBorder>Reset</Button>
+    <Button primary>Submit</Button>
+  </>
+);
+
+export const Header: FC<HeaderProps> = () => {
+  const [showAddMovie, setShowAddMovie] = useState(false);
+
+  return (
   <HeadWrapper>
+    <Dialog
+      title="Add movie"
+      show={showAddMovie}
+      setShowDialog={setShowAddMovie}
+      actions={DialogAddMovieActions}
+    >
+      {dialogFields.map((field) => (
+        <FormControl key={field.label}>
+          <Field type={field.type} label={field.label} placeholder={field.placeholder}/>
+        </FormControl>
+      ))}
+    </Dialog>
     <Container>
       <Row>
         <Col width="75%">
           <Image url={Logo} width='150px' />
         </Col>
         <Col width="25%" align="right">
-          <Button>+ add movie</Button>
+          <Button onClick={() => setShowAddMovie(true)}>+ add movie</Button>
         </Col>
       </Row>
       <Row margin="0 2em">
@@ -45,14 +70,14 @@ export const Header: FC<HeaderProps> = () => (
       </Row>
       <Row margin="0 2em">
         <Col width="75%">
-          <Input type="text" placeholder="What do you want to watch" />
+          <Field type="text" placeholder="What do you want to watch" />
         </Col>
         <Col width="0" margin="0 1.5em">
           <Button primary>search</Button>
         </Col>
       </Row>
     </Container>
-  </HeadWrapper>
-);
+  </HeadWrapper>);
+};
 
 export default Header;
