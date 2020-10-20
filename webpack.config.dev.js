@@ -8,12 +8,12 @@ module.exports = {
   entry: {
     app: './src/index.tsx',
   },
-  devtool: 'inline-source-map',
+  target: 'web',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.tsx', '.jsx', '.ts', '.js'],
   },
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, 'dist'),
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -36,15 +36,11 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loaders: ['ts-loader'],
+        use: 'ts-loader',
       },
       {
         test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
+        use: 'html-loader',
       },
       {
         test: /\.s?css$/,
