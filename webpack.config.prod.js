@@ -4,12 +4,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
     app: './src/index.tsx',
   },
+  resolve: {
+    extensions: ['.tsx', '.jsx', '.ts', '.js'],
+  },
   devServer: {
     contentBase: './dist',
+    port: '3000',
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -43,10 +47,11 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         use: [
           'style-loader',
           'css-loader',
+          'sass-loader',
         ],
       },
       {
