@@ -12,11 +12,11 @@ const FooterWrapper = styled.div`
 `;
 
 type FooterProps = {
-}
+};
 
 export const Footer: FC<FooterProps> = () => (
   <FooterWrapper>
-    <Image url={Logo} width='150px' />
+    <Image url={Logo} width="150px" />
   </FooterWrapper>
 );
 

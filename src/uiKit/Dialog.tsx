@@ -7,7 +7,7 @@ type MainProps = {
   children: JSX.Element[] | JSX.Element | string,
   actions: JSX.Element[] | JSX.Element,
   setShowDialog: (arg: boolean) => void,
-}
+};
 
 interface DialogModalProps {
   hide: boolean
@@ -23,7 +23,6 @@ const DialogModal = styled.div<DialogModalProps>`
   padding-top: 100px;
   background-color: black;
   background-color: rgba(0, 0, 0, 0.4);
-  transition: 0.5s;
   overflow: auto;
   transition: all 0.3s linear;
 `;

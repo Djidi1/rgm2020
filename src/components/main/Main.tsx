@@ -57,32 +57,35 @@ const LineBreak = styled.div`
 `;
 
 type MainProps = {
-}
+};
 
 export const Main: FC<MainProps> = () => (
-    <MainWrapper>
-      <Row>
-        <Col>
-          <MoviesTypesStyled>
-            {moviesTypes.map((type) => <li key={type}><a>{type}</a></li>)}
-          </MoviesTypesStyled>
-        </Col>
-        <Col align="right">
-          <SortByStyled>
-            Sort By
-            <select>
-              <option>Release date</option>
-            </select>
-          </SortByStyled>
-        </Col>
-      </Row>
-      <Row>
-        <FilterResult>
-          <b>39</b> movies found
+  <MainWrapper>
+    <Row>
+      <Col>
+        <MoviesTypesStyled>
+          {moviesTypes.map((type) => <li key={type}><a>{type}</a></li>)}
+        </MoviesTypesStyled>
+      </Col>
+      <Col align="right">
+        <SortByStyled>
+          Sort By
+          <select>
+            <option>Release date</option>
+          </select>
+        </SortByStyled>
+      </Col>
+    </Row>
+    <Row>
+      <FilterResult>
+        <b>39</b>
+        {' '}
+        movies found
       </FilterResult>
-      </Row>
-      <Row margin="0 1em">
-        {movies.map((movie, index) => <>
+    </Row>
+    <Row margin="0 1em">
+      {movies.map((movie, index) => (
+        <>
           <Card
             key={movie.title}
             title={movie.title}
@@ -91,9 +94,10 @@ export const Main: FC<MainProps> = () => (
             urlImage={movie.urlImage}
           />
           {(index + 1) % 3 === 0 && <LineBreak />}
-        </>)}
-      </Row>
-    </MainWrapper>
+        </>
+      ))}
+    </Row>
+  </MainWrapper>
 );
 
 export default Main;

@@ -5,7 +5,7 @@ type MainProps = {
   type: string,
   label?: string,
   placeholder?: string,
-}
+};
 
 const Label = styled.label`
     color: #f65261;

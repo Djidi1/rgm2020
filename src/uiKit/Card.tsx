@@ -13,7 +13,7 @@ type MainProps = {
   title: string,
   description: string,
   year: string,
-}
+};
 
 const PopUpMenuButton = styled.div`
   position: absolute;
@@ -94,11 +94,13 @@ const Card: FC<MainProps> = ({
         show={showDeleteMovie}
         setShowDialog={setShowDeleteMovie}
         actions={<div>confirm</div>}
-      >Are you sure you want to delete this movie?</Dialog>
+      >
+        Are you sure you want to delete this movie?
+      </Dialog>
       <CardImageWrapper>
         <Popup show={showPopup} setShowPopup={setShowPopup}>
-          <button onClick={() => setShowEditMovie(true)}>Edit</button>
-          <button onClick={() => setShowDeleteMovie(true)}>Delete</button>
+          <button type="button" onClick={() => setShowEditMovie(true)}>Edit</button>
+          <button type="button" onClick={() => setShowDeleteMovie(true)}>Delete</button>
         </Popup>
         <PopUpMenuButton onClick={() => setShowPopup(true)}>...</PopUpMenuButton>
         {urlImage}

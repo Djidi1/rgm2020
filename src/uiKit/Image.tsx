@@ -8,9 +8,9 @@ interface ImageProps {
 
 type MainProps = {
   url: string,
-}
+};
 
-const image: FC<MainProps> = ({ url, ...props }) => <img src={url} {...props} />;
+const image: FC<MainProps> = ({ url, ...props }) => <img src={url} alt="img" {...props} />;
 
 const Image = styled(image)<ImageProps>`
   width: ${({ width }) => width || 'initial'};

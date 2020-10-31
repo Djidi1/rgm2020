@@ -5,7 +5,7 @@ type MainProps = {
   show: boolean,
   children: JSX.Element[] | JSX.Element | string,
   setShowPopup: (arg: boolean) => void,
-}
+};
 
 interface PopupProps {
   hide: boolean

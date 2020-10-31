@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
-import App from './App';
+import hotReloadApp from './App';
 
 // Include react
 ReactDOM.render(
-  App,
+  hotReloadApp,
   document.getElementById('root'),
 );

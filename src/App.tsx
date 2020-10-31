@@ -12,7 +12,7 @@ import MainLayout from './components/layouts/MainLayout';
 import ErrorBoundary from './helpers/ErrorBaundery';
 
 type AppProps = {
-}
+};
 
 export const App: FC<AppProps> = () => (
   <MainLayout>

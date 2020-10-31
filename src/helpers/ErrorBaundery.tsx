@@ -9,9 +9,12 @@ interface State {
 }
 
 class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasError: false,
+    };
+  }
 
   // _: Error
   public static getDerivedStateFromError(): State {
@@ -25,11 +28,13 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   render(): ReactNode {
-    if (this.state.hasError) {
+    const { hasError } = this.state;
+    const { children } = this.props;
+    if (hasError) {
       return <h1>Something went wrong... please reload a page.</h1>;
     }
 
-    return this.props.children;
+    return children;
   }
 }
 
