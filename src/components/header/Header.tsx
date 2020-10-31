@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'; // we need this to make JSX compile
+import React, { FC } from 'react'; // we need this to make JSX compile
 import styled from 'styled-components';
 import {
   Button,
@@ -12,6 +12,7 @@ import {
 import Logo from '../../img/logo.png';
 import Dialog from '../../uiKit/Dialog';
 import { dialogFields } from '../../helpers/constants';
+import useToggle from '../../helpers/hooks';
 
 const HeadWrapper = styled.div`
   background: grey;
@@ -38,14 +39,14 @@ const DialogAddMovieActions = (
 );
 
 export const Header: FC<HeaderProps> = () => {
-  const [showAddMovie, setShowAddMovie] = useState(false);
+  const [showAddMovie, toggleShowAddMovie] = useToggle(false);
 
   return (
     <HeadWrapper>
       <Dialog
         title="Add movie"
         show={showAddMovie}
-        setShowDialog={setShowAddMovie}
+        toggleShowDialog={toggleShowAddMovie}
         actions={DialogAddMovieActions}
       >
         {dialogFields.map((field) => (
@@ -60,7 +61,7 @@ export const Header: FC<HeaderProps> = () => {
             <Image url={Logo} width="150px" />
           </Col>
           <Col width="25%" align="right">
-            <Button onClick={() => setShowAddMovie(true)}>+ add movie</Button>
+            <Button onClick={toggleShowAddMovie}>+ add movie</Button>
           </Col>
         </Row>
         <Row margin="0 2em">

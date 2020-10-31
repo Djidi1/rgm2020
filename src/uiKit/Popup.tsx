@@ -4,7 +4,7 @@ import styled from 'styled-components';
 type MainProps = {
   show: boolean,
   children: JSX.Element[] | JSX.Element | string,
-  setShowPopup: (arg: boolean) => void,
+  toggleShowPopup: () => void,
 };
 
 interface PopupProps {
@@ -45,10 +45,10 @@ const PopUpMenu = styled.div<PopupProps>`
 `;
 
 const Dialog: FC<MainProps> = ({
-  show, children, setShowPopup,
+  show, children, toggleShowPopup,
 }) => (
   <PopUpMenu hide={!show}>
-    <PopupCloseButton onClick={() => setShowPopup(false)}>X</PopupCloseButton>
+    <PopupCloseButton onClick={toggleShowPopup}>X</PopupCloseButton>
     {children}
   </PopUpMenu>
 );

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'; // we need this to make JSX compile
+import React, { FC } from 'react'; // we need this to make JSX compile
 import styled from 'styled-components';
 import {
   Dialog,
@@ -7,6 +7,7 @@ import {
   Popup,
 } from '.';
 import { dialogFields } from '../helpers/constants';
+import useToggle from '../helpers/hooks';
 
 type MainProps = {
   urlImage: string,
@@ -72,15 +73,15 @@ const CardYear = styled.div`
 const Card: FC<MainProps> = ({
   urlImage, title, description, year,
 }) => {
-  const [showEditMovie, setShowEditMovie] = useState(false);
-  const [showDeleteMovie, setShowDeleteMovie] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showEditMovie, toggleShowEditMovie] = useToggle(false);
+  const [showDeleteMovie, toggleShowDeleteMovie] = useToggle(false);
+  const [showPopup, toggleShowPopup] = useToggle(false);
   return (
     <CardWrapper>
       <Dialog
         title="Edit movie"
         show={showEditMovie}
-        setShowDialog={setShowEditMovie}
+        toggleShowDialog={toggleShowEditMovie}
         actions={<div>action</div>}
       >
         {dialogFields.map((field) => (
@@ -92,17 +93,17 @@ const Card: FC<MainProps> = ({
       <Dialog
         title="Delete movie"
         show={showDeleteMovie}
-        setShowDialog={setShowDeleteMovie}
+        toggleShowDialog={toggleShowDeleteMovie}
         actions={<div>confirm</div>}
       >
         Are you sure you want to delete this movie?
       </Dialog>
       <CardImageWrapper>
-        <Popup show={showPopup} setShowPopup={setShowPopup}>
-          <button type="button" onClick={() => setShowEditMovie(true)}>Edit</button>
-          <button type="button" onClick={() => setShowDeleteMovie(true)}>Delete</button>
+        <Popup show={showPopup} toggleShowPopup={() => toggleShowPopup}>
+          <button type="button" onClick={toggleShowEditMovie}>Edit</button>
+          <button type="button" onClick={toggleShowDeleteMovie}>Delete</button>
         </Popup>
-        <PopUpMenuButton onClick={() => setShowPopup(true)}>...</PopUpMenuButton>
+        <PopUpMenuButton onClick={toggleShowPopup}>...</PopUpMenuButton>
         {urlImage}
       </CardImageWrapper>
       <CardTitle>

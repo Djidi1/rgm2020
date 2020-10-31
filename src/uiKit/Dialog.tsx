@@ -2,11 +2,11 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 type MainProps = {
-  show: boolean,
+  show: boolean | (() => void),
   title: string,
   children: JSX.Element[] | JSX.Element | string,
   actions: JSX.Element[] | JSX.Element,
-  setShowDialog: (arg: boolean) => void,
+  toggleShowDialog: () => void,
 };
 
 interface DialogModalProps {
@@ -65,11 +65,11 @@ const DialogActions = styled.div`
 `;
 
 const Dialog: FC<MainProps> = ({
-  show, title, children, actions, setShowDialog,
+  show, title, children, actions, toggleShowDialog,
 }) => (
   <DialogModal hide={!show}>
     <DialogWrapper>
-      <DialogCloseButton onClick={() => setShowDialog(false)}>X</DialogCloseButton>
+      <DialogCloseButton onClick={toggleShowDialog}>X</DialogCloseButton>
       <DialogTitle>{title}</DialogTitle>
       <DialogBody>{children}</DialogBody>
       {actions && <DialogActions>{actions}</DialogActions>}
