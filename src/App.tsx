@@ -3,9 +3,10 @@ import React, { FC } from 'react'; // we need this to make JSX compile
 import './styles.scss';
 
 import {
-  Header,
-  Main,
   Footer,
+  Details,
+  // Header,
+  Main,
 } from './components';
 
 import MainLayout from './components/layouts/MainLayout';
@@ -16,7 +17,8 @@ type AppProps = {
 
 export const App: FC<AppProps> = () => (
   <MainLayout>
-    <Header />
+    {/* <Header /> */}
+    <Details />
     <ErrorBoundary>
       <Main />
     </ErrorBoundary>

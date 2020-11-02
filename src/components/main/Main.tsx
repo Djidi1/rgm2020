@@ -1,11 +1,13 @@
-import React, { FC } from 'react'; // we need this to make JSX compile
+import React, { FC, useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { getMovies } from '../../store/actions';
 import {
   Col,
   Card,
   Row,
 } from '../../uiKit';
-import { movies, moviesTypes } from '../../helpers/constants';
+import { moviesTypes } from '../../helpers/constants';
 
 const MainWrapper = styled.div`
   position: relative;
@@ -57,47 +59,74 @@ const LineBreak = styled.div`
 `;
 
 type MainProps = {
+  getMoviesData: () => void;
+  loading: boolean;
+  movies: [{
+    id: number;
+    title: string;
+    genres: [];
+    poster_path: string;
+    release_date: string;
+  }];
 };
 
-export const Main: FC<MainProps> = () => (
-  <MainWrapper>
-    <Row>
-      <Col>
-        <MoviesTypesStyled>
-          {moviesTypes.map((type) => <li key={type}><a>{type}</a></li>)}
-        </MoviesTypesStyled>
-      </Col>
-      <Col align="right">
-        <SortByStyled>
-          Sort By
-          <select>
-            <option>Release date</option>
-          </select>
-        </SortByStyled>
-      </Col>
-    </Row>
-    <Row>
-      <FilterResult>
-        <b>39</b>
-        {' '}
-        movies found
-      </FilterResult>
-    </Row>
-    <Row margin="0 1em">
-      {movies.map((movie, index) => (
-        <>
-          <Card
-            key={movie.title}
-            title={movie.title}
-            description={movie.description}
-            year={movie.year}
-            urlImage={movie.urlImage}
-          />
-          {(index + 1) % 3 === 0 && <LineBreak />}
-        </>
-      ))}
-    </Row>
-  </MainWrapper>
-);
+export const Main: FC<MainProps> = (props) => {
+  const {
+    getMoviesData,
+    movies,
+    loading,
+  } = props;
 
-export default Main;
+  useEffect(() => {
+    getMoviesData();
+  }, []);
+
+  return (
+    <MainWrapper>
+      <Row>
+        <Col>
+          <MoviesTypesStyled>
+            {moviesTypes.map((type) => <li key={type}><a>{type}</a></li>)}
+          </MoviesTypesStyled>
+        </Col>
+        <Col align="right">
+          <SortByStyled>
+            Sort By
+            <select>
+              <option>Release date</option>
+            </select>
+          </SortByStyled>
+        </Col>
+      </Row>
+      <Row>
+        <FilterResult>
+          <b>39</b>
+          {' '}
+          movies found
+        </FilterResult>
+      </Row>
+      <Row margin="0 1em">
+        {loading ? 'Please wait...' : movies.map((movie, index) => (
+          <Card
+            key={movie.id}
+            title={movie.title}
+            description={movie.genres.join(', ')}
+            year={movie.release_date.substr(0, 4)}
+            urlImage={movie.poster_path}
+          />
+        ))}
+      </Row>
+    </MainWrapper>
+  );
+};
+
+const mapDispatchToProps = {
+  getMoviesData: getMovies,
+};
+
+const mapStateToProps = ({ movies }) => ({
+  movies: movies.movies.data,
+  loading: movies.loading,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

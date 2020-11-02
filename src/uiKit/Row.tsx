@@ -7,7 +7,7 @@ interface RowProps {
 const Row = styled.div<RowProps>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: center;
   ${({ margin }) => (margin ? `margin: ${margin};` : '')}
 `;
 

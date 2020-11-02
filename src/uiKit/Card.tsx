@@ -5,6 +5,7 @@ import {
   FormControl,
   Field,
   Popup,
+  Image,
 } from '.';
 import { dialogFields } from '../helpers/constants';
 import useToggle from '../helpers/hooks';
@@ -35,7 +36,8 @@ const PopUpMenuButton = styled.div`
 const CardWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  flex: 1;
+  justify-content: center;
+  width: 300px;
   margin: 1em;
   color: #555;
 `;
@@ -43,10 +45,7 @@ const CardWrapper = styled.div`
 const CardImageWrapper = styled.div`
   display: flex;
   position: relative;
-  background: #607D8B;
-  flex: 1 0 100%;
   border: 1px solid grey;
-  height: 20em;
   margin-bottom: 1em;
   :hover ${PopUpMenuButton} {
     display: flex;
@@ -68,6 +67,7 @@ const CardYear = styled.div`
   width: fit-content;
   padding: 0.2em 0.8em;
   align-self: start;
+  text-align: center;
 `;
 
 const Card: FC<MainProps> = ({
@@ -104,7 +104,7 @@ const Card: FC<MainProps> = ({
           <button type="button" onClick={toggleShowDeleteMovie}>Delete</button>
         </Popup>
         <PopUpMenuButton onClick={toggleShowPopup}>...</PopUpMenuButton>
-        {urlImage}
+        <Image url={urlImage} width="300px" />
       </CardImageWrapper>
       <CardTitle>
         {title}
