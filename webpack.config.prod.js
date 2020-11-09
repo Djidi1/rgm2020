@@ -4,9 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: {
     app: './src/index.tsx',
+    components: './src/components/index.js',
   },
   resolve: {
     extensions: ['.tsx', '.jsx', '.ts', '.js'],
@@ -50,8 +51,15 @@ module.exports = {
         test: /\.s?css$/,
         use: [
           'style-loader',
-          'css-loader',
-          'sass-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]_[hash:base64:5]',
+              },
+            },
+          },
+          { loader: 'sass-loader', options: { sourceMap: true } },
         ],
       },
       {

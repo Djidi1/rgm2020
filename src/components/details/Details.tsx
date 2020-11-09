@@ -1,5 +1,7 @@
-import React, { FC } from 'react'; // we need this to make JSX compile
+import React, { FC, useEffect } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { getMovie } from '../../store/actions';
 import {
   Container,
   Col,
@@ -13,7 +15,7 @@ const DetailsWrapper = styled.div`
   padding: 0.25em 1em;
   display: flex;
   justify-content: space-between;
-  height: 15em;
+  height: 30em;
 `;
 
 const DetailsTitle = styled.h1`
@@ -33,34 +35,74 @@ const ImageWrapper = styled.div`
 `;
 
 type DetailsProps = {
+  getMovieData: (payload: { id: number }) => void;
+  loading: boolean;
+  movie: {
+    id: number;
+    title: string;
+    tagline: string;
+    overview: string;
+    genres: [];
+    poster_path: string;
+    release_date: string;
+    runtime: number;
+  };
 };
 
-export const Details: FC<DetailsProps> = () => (
-  <DetailsWrapper>
-    <Container>
-      <Row>
-        <Col width="75%">
-          <Image url={Logo} width="150px" />
-        </Col>
-        <Col width="25%" align="right">
-          1
-        </Col>
-      </Row>
-      <Row margin="0 2em">
-        <Col width="25%">
-          <ImageWrapper>
-            image
-          </ImageWrapper>
-        </Col>
-        <Col width="75%">
-          <DetailsTitle>Pulp Fiction</DetailsTitle>
-          <div>Oscar winning movie</div>
-          <div>1994 154 min</div>
-          <div>Description about movie</div>
-        </Col>
-      </Row>
-    </Container>
-  </DetailsWrapper>
-);
+export const Details: FC<DetailsProps> = (props) => {
+  const {
+    getMovieData,
+    movie,
+    loading,
+  } = props;
 
-export default Details;
+  useEffect(() => {
+    const payload = {
+      id: 351286,
+    };
+    getMovieData(payload);
+  }, []);
+
+  console.log(movie);
+
+  return (
+    <DetailsWrapper>
+      <Container>
+        <Row>
+          <Col width="75%">
+            <Image url={Logo} width="125px" />
+          </Col>
+          <Col width="25%" align="right">
+            1
+          </Col>
+        </Row>
+        {loading ? 'Please wait...' : (
+          <Row margin="0 2em">
+            <Col width="25%">
+              <ImageWrapper>
+                <Image url={movie.poster_path} width="300px" />
+              </ImageWrapper>
+            </Col>
+            <Col width="60%">
+              <DetailsTitle>{movie.title}</DetailsTitle>
+              <div>{movie.tagline}</div>
+              <div>{`${movie.release_date.substr(0, 4)} ${movie.runtime ? `${movie.runtime} min` : ''}`}</div>
+              <div>{movie.overview}</div>
+            </Col>
+          </Row>
+        )}
+      </Container>
+    </DetailsWrapper>
+  );
+};
+
+const mapDispatchToProps = {
+  getMovieData: getMovie,
+};
+
+const mapStateToProps = ({ movie }) => ({
+  movie: movie.movie,
+  loading: movie.loading,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Details);

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { getMovies } from '../../store/actions';
@@ -54,12 +54,8 @@ const FilterResult = styled.span`
   color: #fff;
 `;
 
-const LineBreak = styled.div`
-  width: 100%;
-`;
-
 type MainProps = {
-  getMoviesData: () => void;
+  getMoviesData: (payload: { genre: string }) => void;
   loading: boolean;
   movies: [{
     id: number;
@@ -77,16 +73,22 @@ export const Main: FC<MainProps> = (props) => {
     loading,
   } = props;
 
+  const [genre, setGenre] = useState('');
+
   useEffect(() => {
-    getMoviesData();
-  }, []);
+    const payload = {
+      genre: genre === 'All' ? '' : genre,
+      sortBy: 'release_date',
+    };
+    getMoviesData(payload);
+  }, [genre]);
 
   return (
     <MainWrapper>
       <Row>
         <Col>
           <MoviesTypesStyled>
-            {moviesTypes.map((type) => <li key={type}><a>{type}</a></li>)}
+            {moviesTypes.map((type) => <li key={type} role="presentation" onClick={() => setGenre(type)}>{type}</li>)}
           </MoviesTypesStyled>
         </Col>
         <Col align="right">

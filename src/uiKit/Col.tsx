@@ -11,7 +11,6 @@ const Col = styled('div')<ColProps>`
   flex: 1 0 ${({ width }) => width || '100%'};
   flex-flow: column nowrap;
   max-width: 100%;
-  position: relative;
   min-height: 1px;
   margin: ${({ margin }) => margin || 'initial'};
   text-align: ${({ align }) => align || 'left'};
