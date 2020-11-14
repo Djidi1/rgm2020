@@ -49,6 +49,7 @@ const CardImageWrapper = styled.div`
   margin-bottom: 1em;
   width: 100%;
   height: 450px;
+  overflow: hidden;
   :hover ${PopUpMenuButton} {
     display: flex;
   }

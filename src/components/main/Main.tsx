@@ -24,9 +24,16 @@ const MoviesTypesStyled = styled.ul`
   display: flex;
   padding: 0;
   margin-left: 2em;
+  z-index: 1;
   & li {
     list-style: none;
     margin-right: 1em;
+    cursor: pointer;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid transparent;
+    &:hover {
+      border-color: #F65261;
+    }
     & a {
       color: #fff;
     }
@@ -47,6 +54,16 @@ const SortByStyled = styled.span`
     border: 0;
     color: #fff;
   }
+`;
+
+const Separator = styled.div`
+  width: calc(100% - 4em);
+  height: 2px;
+  background-color: #555555;
+  margin: 0 2em;
+  position: relative;
+  top: calc(-1em - 2px);
+  border-bottom: 2px solid #000;
 `;
 
 const FilterResult = styled.span`
@@ -86,12 +103,12 @@ export const Main: FC<MainProps> = (props) => {
   return (
     <MainWrapper>
       <Row>
-        <Col>
+        <Col width="50%">
           <MoviesTypesStyled>
             {moviesTypes.map((type) => <li key={type} role="presentation" onClick={() => setGenre(type)}>{type}</li>)}
           </MoviesTypesStyled>
         </Col>
-        <Col align="right">
+        <Col width="20%" align="right">
           <SortByStyled>
             Sort By
             <select>
@@ -100,6 +117,7 @@ export const Main: FC<MainProps> = (props) => {
           </SortByStyled>
         </Col>
       </Row>
+      <Separator />
       <Row>
         <FilterResult>
           <b>39</b>
