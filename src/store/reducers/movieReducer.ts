@@ -6,7 +6,12 @@ const initState = {
   add_loading: true,
 };
 
-const reducer = (state = initState, action) => {
+type Action = {
+  type: string;
+  json: string;
+};
+
+const reducer = (state = initState, action: Action) => {
   switch (action.type) {
     case 'GET_MOVIE':
       return { ...state, loading: true };

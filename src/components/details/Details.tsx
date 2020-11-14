@@ -93,8 +93,6 @@ export const Details: FC<DetailsProps> = (props) => {
     getMovieData(payload);
   }, []);
 
-  console.log(movie);
-
   return (
     <DetailsWrapper>
       <Container>

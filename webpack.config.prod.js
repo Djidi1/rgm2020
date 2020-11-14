@@ -7,7 +7,7 @@ module.exports = {
   mode: 'development',
   entry: {
     app: './src/index.tsx',
-    components: './src/components/index.js',
+    components: './src/components/index.ts',
   },
   resolve: {
     extensions: ['.tsx', '.jsx', '.ts', '.js'],

@@ -28,8 +28,8 @@
             "node": {
                 "extensions": [
                     ".js",
-                    ".jsx",
                     ".ts",
+                    ".jsx",
                     ".tsx"
                 ]
             }
