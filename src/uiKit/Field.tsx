@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 type MainProps = {
   type: string,
+  value?: string,
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   label?: string,
   placeholder?: string,
 };
@@ -13,11 +15,19 @@ const Label = styled.label`
     font-size: 0.9rem;
 `;
 
-const field: FC<MainProps> = ({ type, label, ...props }) => (
+const field: FC<MainProps> = ({
+  type,
+  label,
+  value,
+  onChange,
+  ...props
+}) => (
   <>
     {label && <Label>{label}</Label>}
     <input
       type={type}
+      value={value}
+      onChange={onChange}
       {...props}
     />
   </>

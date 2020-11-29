@@ -4,11 +4,13 @@ const initState = {
   delete_loading: true,
   edit_loading: true,
   add_loading: true,
+  error: '',
 };
 
 type Action = {
   type: string;
   json: string;
+  error: string;
 };
 
 const reducer = (state = initState, action: Action) => {
@@ -16,7 +18,11 @@ const reducer = (state = initState, action: Action) => {
     case 'GET_MOVIE':
       return { ...state, loading: true };
     case 'MOVIE_RECEIVED':
-      return { ...state, movie: action.json, loading: false };
+      return {
+        ...state, movie: action.json, error: '', loading: false,
+      };
+    case 'MOVIE_NOT_FOUND':
+      return { ...state, error: action.error, loading: false };
     case 'ADD_MOVIE':
       return { ...state, add_loading: true };
     case 'MOVIE_ADDED':

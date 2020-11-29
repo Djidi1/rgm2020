@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { getMovies } from '../../store/actions';
@@ -71,6 +72,11 @@ const FilterResult = styled.span`
   color: #fff;
 `;
 
+const NoMovieFound = styled.h1`
+  color: #fff;
+  font-weight: 200;
+`;
+
 type MainProps = {
   getMoviesData: (payload: { genre: string }) => void;
   loading: boolean;
@@ -89,6 +95,7 @@ export const Main: FC<MainProps> = (props) => {
     movies,
     loading,
   } = props;
+  const { searchQuery } = useParams();
 
   const [genre, setGenre] = useState('');
 
@@ -96,9 +103,22 @@ export const Main: FC<MainProps> = (props) => {
     const payload = {
       genre: genre === 'All' ? '' : genre,
       sortBy: 'release_date',
+      search: searchQuery,
+      searchBy: 'title',
     };
     getMoviesData(payload);
-  }, [genre]);
+  }, [genre, searchQuery]);
+
+  const content = movies?.length ? movies.map((movie) => (
+    <Link key={movie.id} to={`/film/${movie.id}`}>
+      <Card
+        title={movie.title}
+        description={movie.genres.join(', ')}
+        year={movie.release_date.substr(0, 4)}
+        urlImage={movie.poster_path}
+      />
+    </Link>
+  )) : <NoMovieFound>No Movie Found</NoMovieFound>;
 
   return (
     <MainWrapper>
@@ -120,21 +140,13 @@ export const Main: FC<MainProps> = (props) => {
       <Separator />
       <Row>
         <FilterResult>
-          <b>39</b>
+          <b>{movies ? movies?.length : 0}</b>
           {' '}
           movies found
         </FilterResult>
       </Row>
       <Row margin="0 1em">
-        {loading ? 'Please wait...' : movies.map((movie, index) => (
-          <Card
-            key={movie.id}
-            title={movie.title}
-            description={movie.genres.join(', ')}
-            year={movie.release_date.substr(0, 4)}
-            urlImage={movie.poster_path}
-          />
-        ))}
+        {loading ? 'Please wait...' : content}
       </Row>
     </MainWrapper>
   );

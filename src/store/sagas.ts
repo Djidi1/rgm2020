@@ -8,20 +8,30 @@ import {
 const backEndURL = 'http://localhost:4000';
 
 function* fetchMovies(data) {
-  const { genre, sortBy } = data.payload;
+  const {
+    genre,
+    sortBy,
+    search,
+    searchBy,
+  } = data.payload;
   const limitRequest = '?limit=10';
-  const genreFilter = `&searchBy=genres&filter=${genre}`;
+  const searchFilter = search !== '' ? `&searchBy=${searchBy}&search=${search}` : '';
+  const genreFilter = `&filter=${genre}`;
   const sortByFilter = `&sortBy=${sortBy}&sortOrder=desc`;
-  const json = yield fetch(`${backEndURL}/movies${limitRequest}${genreFilter}${sortByFilter}`)
+  const json = yield fetch(`${backEndURL}/movies${limitRequest}${searchFilter}${genreFilter}${sortByFilter}`)
     .then((response) => response.json());
   yield put({ type: 'MOVIES_RECEIVED', json });
 }
 
 function* getMovie(data) {
   const { id } = data.payload;
-  const json = yield fetch(`${backEndURL}/movies/${id}`)
-    .then((response) => response.json());
-  yield put({ type: 'MOVIE_RECEIVED', json });
+  try {
+    const json = yield fetch(`${backEndURL}/movies/${id}`)
+      .then((response) => response.json());
+    yield put({ type: 'MOVIE_RECEIVED', json });
+  } catch {
+    yield put({ type: 'MOVIE_NOT_FOUND', error: 'Movie not found' });
+  }
 }
 
 function* addMovie(data) {

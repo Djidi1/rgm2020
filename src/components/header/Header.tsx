@@ -1,4 +1,5 @@
-import React, { FC } from 'react'; // we need this to make JSX compile
+import React, { FC, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   Button,
@@ -39,7 +40,17 @@ const DialogAddMovieActions = (
 );
 
 export const Header: FC<HeaderProps> = () => {
+  const history = useHistory();
   const [showAddMovie, toggleShowAddMovie] = useToggle(false);
+  const [searchString, setSearchString] = useState('');
+
+  const handleSearchInput = (e) => {
+    setSearchString(e.target.value);
+  };
+
+  const handleSearch = () => {
+    history.push(`/search/${searchString}`);
+  };
 
   return (
     <HeadWrapper>
@@ -71,10 +82,15 @@ export const Header: FC<HeaderProps> = () => {
         </Row>
         <Row margin="0 2em">
           <Col width="75%">
-            <Field type="text" placeholder="What do you want to watch" />
+            <Field
+              type="text"
+              placeholder="What do you want to watch"
+              value={searchString}
+              onChange={handleSearchInput}
+            />
           </Col>
           <Col width="0" margin="0 1.5em">
-            <Button primary>search</Button>
+            <Button primary onClick={handleSearch}>search</Button>
           </Col>
         </Row>
       </Container>
