@@ -5,8 +5,8 @@ type MainProps = {
   show: boolean | (() => void),
   title: string,
   children: JSX.Element[] | JSX.Element | string,
-  actions: JSX.Element[] | JSX.Element,
   toggleShowDialog: () => void,
+  actions?: JSX.Element[] | JSX.Element,
 };
 
 interface DialogModalProps {

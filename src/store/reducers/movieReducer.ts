@@ -5,6 +5,7 @@ const initState = {
   edit_loading: true,
   add_loading: true,
   error: '',
+  messages: [],
 };
 
 type Action = {
@@ -26,7 +27,7 @@ const reducer = (state = initState, action: Action) => {
     case 'ADD_MOVIE':
       return { ...state, add_loading: true };
     case 'MOVIE_ADDED':
-      return { ...state, movie: action.json, add_loading: false };
+      return { ...state, messages: action.json, add_loading: false };
     case 'EDIT_MOVIE':
       return { ...state, edit_loading: true };
     case 'MOVIE_UPDATED':

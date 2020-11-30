@@ -1,6 +1,9 @@
 import React, { FC, useState } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Formik, Form, ErrorMessage } from 'formik';
 import styled from 'styled-components';
+import { addMovie } from '../../store/actions';
 import {
   Button,
   Container,
@@ -29,17 +32,78 @@ const HeaderTitle = styled.h1`
   font-weight: normal;
 `;
 
-type HeaderProps = {
-};
-
-const DialogAddMovieActions = (
+const DialogAddMovieActions = ({ disabled }) => (
   <>
-    <Button withBorder>Reset</Button>
-    <Button primary>Submit</Button>
+    <Button withBorder type="reset">Reset</Button>
+    <Button primary disabled={disabled} type="submit">Submit</Button>
   </>
 );
 
-export const Header: FC<HeaderProps> = () => {
+const initValues = {
+  title: '',
+  release_date: '',
+  poster_path: '',
+  genres: '',
+  overview: '',
+  runtime: '',
+};
+
+const mapDispatchToProps = {
+  addMovieData: addMovie,
+};
+
+const mapStateToProps = ({ movie }) => ({
+  movie: movie.movie,
+  add_loading: movie.add_loading,
+  error: movie.error,
+});
+
+const DialogAddMovie = connect(mapStateToProps, mapDispatchToProps)(
+  ({ showAddMovie, toggleShowAddMovie, addMovieData }) => (
+    <Dialog
+      title="Add movie"
+      show={showAddMovie}
+      toggleShowDialog={toggleShowAddMovie}
+    >
+      <Formik
+        enableReinitialize
+        initialValues={initValues}
+        validate={(values) => {
+          const errors: {title?: string} = {};
+          if (!values.title) {
+            errors.title = 'Required';
+          }
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          addMovieData(values).then(() => {
+            setSubmitting(false);
+          });
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            {dialogFields.map((field) => (
+              <FormControl key={field.label}>
+                <Field
+                  formik
+                  type={field.type}
+                  name={field.name}
+                  label={field.label}
+                  placeholder={field.placeholder}
+                />
+                <ErrorMessage name={field.name} component="div" />
+              </FormControl>
+            ))}
+            <DialogAddMovieActions disabled={isSubmitting} />
+          </Form>
+        )}
+      </Formik>
+    </Dialog>
+  ),
+);
+
+export const Header: FC = () => {
   const history = useHistory();
   const [showAddMovie, toggleShowAddMovie] = useToggle(false);
   const [searchString, setSearchString] = useState('');
@@ -54,18 +118,7 @@ export const Header: FC<HeaderProps> = () => {
 
   return (
     <HeadWrapper>
-      <Dialog
-        title="Add movie"
-        show={showAddMovie}
-        toggleShowDialog={toggleShowAddMovie}
-        actions={DialogAddMovieActions}
-      >
-        {dialogFields.map((field) => (
-          <FormControl key={field.label}>
-            <Field type={field.type} label={field.label} placeholder={field.placeholder} />
-          </FormControl>
-        ))}
-      </Dialog>
+      <DialogAddMovie showAddMovie={showAddMovie} toggleShowAddMovie={toggleShowAddMovie} />
       <Container>
         <Row>
           <Col width="75%">

@@ -15,7 +15,7 @@ function* fetchMovies(data) {
     searchBy,
   } = data.payload;
   const limitRequest = '?limit=10';
-  const searchFilter = search !== '' ? `&searchBy=${searchBy}&search=${search}` : '';
+  const searchFilter = !search ? '' : `&searchBy=${searchBy}&search=${search}`;
   const genreFilter = `&filter=${genre}`;
   const sortByFilter = `&sortBy=${sortBy}&sortOrder=desc`;
   const json = yield fetch(`${backEndURL}/movies${limitRequest}${searchFilter}${genreFilter}${sortByFilter}`)
@@ -35,24 +35,26 @@ function* getMovie(data) {
 }
 
 function* addMovie(data) {
+  const { payload } = data;
   const json = yield fetch(`${backEndURL}/movies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   })
     .then((response) => response.json());
   yield put({ type: 'MOVIE_ADDED', json });
 }
 
 function* editMovie(data) {
+  const { payload } = data;
   const json = yield fetch(`${backEndURL}/movies`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   })
     .then((response) => response.json());
   yield put({ type: 'MOVIE_UPDATED', json });

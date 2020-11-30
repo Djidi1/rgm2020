@@ -37,7 +37,8 @@ export const App: FC<AppProps> = () => (
           <Route exact path="/" component={Main} />
           <Route path="/film" component={Main} />
           <Route path="/search/:searchQuery" component={Main} />
-          <Route component={Page404} />
+          <Route path="/search" component={Main} />
+          <Route path="*" component={Page404} />
         </Switch>
       </ErrorBoundary>
       <Footer />

@@ -1,12 +1,16 @@
-import React, { FC } from 'react'; // we need this to make JSX compile
+import React, { FC } from 'react';
+import { Field as FormikField } from 'formik';
 import styled from 'styled-components';
 
 type MainProps = {
   type: string,
+  formik?: boolean,
   value?: string,
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   label?: string,
+  name?: string,
   placeholder?: string,
+  className?: string,
 };
 
 const Label = styled.label`
@@ -16,20 +20,37 @@ const Label = styled.label`
 `;
 
 const field: FC<MainProps> = ({
+  formik = false,
   type,
+  name,
   label,
   value,
   onChange,
+  placeholder,
+  className,
   ...props
 }) => (
   <>
     {label && <Label>{label}</Label>}
-    <input
-      type={type}
-      value={value}
-      onChange={onChange}
-      {...props}
-    />
+    {!formik ? (
+      <input
+        className={className}
+        name={name}
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        {...props}
+      />
+    )
+      : (
+        <FormikField
+          className={className}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+        />
+      )}
   </>
 );
 

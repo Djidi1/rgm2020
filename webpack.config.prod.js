@@ -2,6 +2,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { SourceMapDevToolPlugin } = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -23,6 +24,9 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html',
     }),
+    new SourceMapDevToolPlugin({
+      filename: '[file].map',
+    }),
   ],
   output: {
     filename: '[name].bundle.js',
@@ -37,7 +41,8 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        enforce: 'pre',
+        use: ['source-map-loader', 'ts-loader'],
         exclude: /node_modules/,
       },
       {
