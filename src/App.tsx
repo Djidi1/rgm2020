@@ -24,20 +24,27 @@ import ErrorBoundary from './helpers/ErrorBaundery';
 type AppProps = {
 };
 
+const Page = ({
+  path, header, body, exact = false,
+}) => (
+  <>
+    <Switch>
+      <Route exact={exact} path={path} component={header} />
+    </Switch>
+    <Switch>
+      <Route exact={exact} path={path} component={body} />
+    </Switch>
+  </>
+);
+
 export const App: FC<AppProps> = () => (
   <Router>
     <MainLayout>
       <ErrorBoundary>
         <Switch>
-          <Route path="/film/:filmId" component={Details} />
-          <Route path="/film" component={Details} />
-          <Route path="/" component={Header} />
-        </Switch>
-        <Switch>
-          <Route exact path="/" component={Main} />
-          <Route path="/film" component={Main} />
-          <Route path="/search/:searchQuery" component={Main} />
-          <Route path="/search" component={Main} />
+          <Page exact path="/" header={Header} body={Main} />
+          <Page path="/film/:filmId" header={Details} body={Main} exact={false} />
+          <Page path="/search/:searchQuery" header={Header} body={Main} />
           <Route path="*" component={Page404} />
         </Switch>
       </ErrorBoundary>
