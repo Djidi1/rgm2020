@@ -2,19 +2,20 @@ import React, { FC } from 'react'; // we need this to make JSX compile
 import styled from 'styled-components';
 import {
   Dialog,
-  FormControl,
-  Field,
   Popup,
   Image,
-} from '.';
-import { dialogFields } from '../helpers/constants';
-import useToggle from '../helpers/hooks';
+} from '../../uiKit';
+import useToggle from '../../helpers/hooks';
+import EditMovie from './EditMovie';
 
 type MainProps = {
-  urlImage: string,
-  title: string,
-  description: string,
-  year: string,
+  movie: {
+    id: number;
+    title: string;
+    genres: string[];
+    poster_path: string;
+    release_date: string;
+  };
 };
 
 const PopUpMenuButton = styled.div`
@@ -73,26 +74,21 @@ const CardYear = styled.div`
   text-align: center;
 `;
 
-const Card: FC<MainProps> = ({
-  urlImage, title, description, year,
-}) => {
+const Card: FC<MainProps> = ({ movie }) => {
+  const {
+    poster_path: posterPath, title, genres, release_date: releaseDate,
+  } = movie;
+
   const [showEditMovie, toggleShowEditMovie] = useToggle(false);
   const [showDeleteMovie, toggleShowDeleteMovie] = useToggle(false);
   const [showPopup, toggleShowPopup] = useToggle(false);
   return (
     <CardWrapper>
-      <Dialog
-        title="Edit movie"
-        show={showEditMovie}
-        toggleShowDialog={toggleShowEditMovie}
-        actions={<div>action</div>}
-      >
-        {dialogFields.map((field) => (
-          <FormControl key={field.label}>
-            <Field type={field.type} label={field.label} placeholder={field.placeholder} />
-          </FormControl>
-        ))}
-      </Dialog>
+      <EditMovie
+        movie={movie}
+        showAddMovie={showEditMovie}
+        toggleShowAddMovie={toggleShowEditMovie}
+      />
       <Dialog
         title="Delete movie"
         show={showDeleteMovie}
@@ -107,13 +103,13 @@ const Card: FC<MainProps> = ({
           <button type="button" onClick={toggleShowDeleteMovie}>Delete</button>
         </Popup>
         <PopUpMenuButton onClick={toggleShowPopup}>...</PopUpMenuButton>
-        <Image url={urlImage} width="300px" />
+        <Image url={posterPath} width="300px" />
       </CardImageWrapper>
       <CardTitle>
         {title}
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>{genres.join(', ')}</CardDescription>
       </CardTitle>
-      <CardYear>{year}</CardYear>
+      <CardYear>{releaseDate.substr(0, 4)}</CardYear>
     </CardWrapper>
   );
 };

@@ -11,6 +11,7 @@ type MainProps = {
   name?: string,
   placeholder?: string,
   className?: string,
+  options?: string[],
 };
 
 const Label = styled.label`
@@ -18,6 +19,30 @@ const Label = styled.label`
     text-transform: uppercase;
     font-size: 0.9rem;
 `;
+
+// id: 1607065154583
+
+const FormikFieldType = ({
+  type, className, name, placeholder, options,
+}) => (type === 'select'
+  ? (
+    <FormikField
+      as={type}
+      className={className}
+      name={name}
+      placeholder={placeholder}
+      multiple
+    >
+      {options.map((option) => <option key={option}>{option}</option>)}
+    </FormikField>
+  ) : (
+    <FormikField
+      type={type}
+      className={className}
+      name={name}
+      placeholder={placeholder}
+    />
+  ));
 
 const field: FC<MainProps> = ({
   formik = false,
@@ -28,6 +53,7 @@ const field: FC<MainProps> = ({
   onChange,
   placeholder,
   className,
+  options,
   ...props
 }) => (
   <>
@@ -44,11 +70,12 @@ const field: FC<MainProps> = ({
       />
     )
       : (
-        <FormikField
+        <FormikFieldType
           className={className}
           name={name}
           type={type}
           placeholder={placeholder}
+          options={options}
         />
       )}
   </>

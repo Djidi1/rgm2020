@@ -111,12 +111,7 @@ export const Main: FC<MainProps> = (props) => {
 
   const content = movies?.length ? movies.map((movie) => (
     <Link key={movie.id} to={`/film/${movie.id}`}>
-      <Card
-        title={movie.title}
-        description={movie.genres.join(', ')}
-        year={movie.release_date.substr(0, 4)}
-        urlImage={movie.poster_path}
-      />
+      <Card movie={movie} />
     </Link>
   )) : <NoMovieFound>No Movie Found</NoMovieFound>;
 

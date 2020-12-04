@@ -1,21 +1,17 @@
 import React, { FC } from 'react';
-import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, ErrorMessage } from 'formik';
 import styled from 'styled-components';
-import { addMovie } from '../../store/actions';
+import DialogAddMovie from './AddMovie';
 import {
   Button,
   Container,
   Col,
-  FormControl,
   Row,
   Image,
   Field,
 } from '../../uiKit';
 import Logo from '../../img/logo.png';
-import Dialog from '../../uiKit/Dialog';
-import { dialogFields } from '../../helpers/constants';
 import useToggle from '../../helpers/hooks';
 
 const HeadWrapper = styled.div`
@@ -31,83 +27,6 @@ const HeaderTitle = styled.h1`
   text-transform: uppercase;
   font-weight: normal;
 `;
-
-const DialogAddMovieActions = ({ disabled }) => (
-  <>
-    <Button withBorder type="reset">Reset</Button>
-    <Button primary disabled={disabled} type="submit">Submit</Button>
-  </>
-);
-
-const mapDispatchToProps = {
-  addMovieData: addMovie,
-};
-
-const mapStateToProps = ({ movie }) => ({
-  movie: movie.movie,
-  add_loading: movie.add_loading,
-  error: movie.error,
-});
-
-const DialogAddMovie = connect(mapStateToProps, mapDispatchToProps)(
-  ({ showAddMovie, toggleShowAddMovie, addMovieData }) => {
-    const initValues = {
-      title: '',
-      release_date: '',
-      poster_path: '',
-      genres: '',
-      overview: '',
-      runtime: '',
-    };
-
-    const addMovieValidator = (values) => {
-      const errors: {title?: string} = {};
-      if (!values.title) {
-        errors.title = 'Required';
-      }
-      return errors;
-    };
-
-    const addMovieOnSubmit = (values, { setSubmitting }) => {
-      addMovieData(values).then(() => {
-        setSubmitting(false);
-      });
-    };
-
-    return (
-      <Dialog
-        title="Add movie"
-        show={showAddMovie}
-        toggleShowDialog={toggleShowAddMovie}
-      >
-        <Formik
-          enableReinitialize
-          initialValues={initValues}
-          validate={addMovieValidator}
-          onSubmit={addMovieOnSubmit}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              {dialogFields.map((field) => (
-                <FormControl key={field.label}>
-                  <Field
-                    formik
-                    type={field.type}
-                    name={field.name}
-                    label={field.label}
-                    placeholder={field.placeholder}
-                  />
-                  <ErrorMessage name={field.name} component="div" />
-                </FormControl>
-              ))}
-              <DialogAddMovieActions disabled={isSubmitting} />
-            </Form>
-          )}
-        </Formik>
-      </Dialog>
-    );
-  },
-);
 
 export const Header: FC = () => {
   const history = useHistory();
