@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { addMovie } from '../../store/actions';
@@ -7,17 +7,13 @@ import {
   Button, Dialog, Field, FormControl,
 } from '../../uiKit';
 
-const mapDispatchToProps = {
-  addMovieData: addMovie,
+type AddMovieProps = {
+  showAddMovie: boolean;
+  toggleShowAddMovie: () => void;
+  addMovieData: (object) => { finally: (object) => void };
 };
 
-const mapStateToProps = ({ movie }) => ({
-  movie: movie.movie,
-  add_loading: movie.add_loading,
-  error: movie.error,
-});
-
-const AddMovie = ({ showAddMovie, toggleShowAddMovie, addMovieData }) => {
+export const AddMovie: FC<AddMovieProps> = ({ showAddMovie, toggleShowAddMovie, addMovieData }) => {
   const initValues = {
     title: '',
     release_date: '',
@@ -55,8 +51,8 @@ const AddMovie = ({ showAddMovie, toggleShowAddMovie, addMovieData }) => {
       >
         {({ isSubmitting }) => (
           <Form>
-            {dialogFields.map((field) => (
-              <FormControl key={field.label}>
+            {dialogFields.map((field, index) => (
+              <FormControl key={field.label || index}>
                 <Field
                   formik
                   type={field.type}
@@ -76,5 +72,15 @@ const AddMovie = ({ showAddMovie, toggleShowAddMovie, addMovieData }) => {
     </Dialog>
   );
 };
+
+const mapDispatchToProps = {
+  addMovieData: addMovie,
+};
+
+const mapStateToProps = ({ movie }) => ({
+  movie: movie.movie,
+  add_loading: movie.add_loading,
+  error: movie.error,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddMovie);

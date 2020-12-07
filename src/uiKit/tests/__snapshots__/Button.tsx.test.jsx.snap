@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UI-Kit Button is expected to render successfully 1`] = `
+<button
+  className="Button-pmfev1-0 hXcYjb"
+/>
+`;
+
+exports[`UI-Kit Button is expected to render successfully with params 1`] = `
+<button
+  className="Button-pmfev1-0 iulaVl"
+/>
+`;
