@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UI-Kit Image is expected to render successfully 1`] = `
+<div
+  className="lazyload-wrapper"
+>
+  <div
+    className="lazyload-placeholder"
+    style={
+      Object {
+        "height": 320,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`UI-Kit Image is expected to render successfully with params 1`] = `
+<div
+  className="lazyload-wrapper"
+>
+  <div
+    className="lazyload-placeholder"
+    style={
+      Object {
+        "height": 320,
+      }
+    }
+  />
+</div>
+`;

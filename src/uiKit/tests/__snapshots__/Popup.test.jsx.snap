@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UI-Kit Popup is expected to render successfully 1`] = `
+<div
+  className="Popup__PopUpMenu-sc-1xszb4m-1 iMSOXG"
+>
+  <span
+    className="Popup__PopupCloseButton-sc-1xszb4m-0 hLuUyq"
+  >
+    X
+  </span>
+</div>
+`;

@@ -7,7 +7,15 @@ import {
   Button, Dialog, Field, FormControl,
 } from '../../uiKit';
 
-const EditMovie = ({
+export const editMovieValidator = (values: {title: string}): {title?: string} => {
+  const errors: {title?: string} = {};
+  if (!values.title) {
+    errors.title = 'Required';
+  }
+  return errors;
+};
+
+export const EditMovieComp = ({
   movie, showAddMovie, toggleShowAddMovie, editMovieData,
 }) => {
   const initValues = {
@@ -18,14 +26,6 @@ const EditMovie = ({
     genres: movie.genres,
     overview: movie.overview,
     runtime: movie.runtime,
-  };
-
-  const editMovieValidator = (values) => {
-    const errors: {title?: string} = {};
-    if (!values.title) {
-      errors.title = 'Required';
-    }
-    return errors;
   };
 
   const editMovieOnSubmit = (values, { setSubmitting }) => {
@@ -80,4 +80,4 @@ const mapStateToProps = ({ movie }) => ({
   error: movie.error,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditMovie);
+export default connect(mapStateToProps, mapDispatchToProps)(EditMovieComp);

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddMovie is expected to render successfully 1`] = `
+<Card__CardWrapper>
+  <Connect(EditMovieComp)
+    movie={
+      Object {
+        "genres": Array [],
+        "release_date": "",
+      }
+    }
+    showAddMovie={false}
+    toggleShowAddMovie={[Function]}
+  />
+  <Dialog
+    actions={
+      <div>
+        confirm
+      </div>
+    }
+    show={false}
+    title="Delete movie"
+    toggleShowDialog={[Function]}
+  >
+    Are you sure you want to delete this movie?
+  </Dialog>
+  <Card__CardImageWrapper>
+    <Dialog
+      show={false}
+      toggleShowPopup={[Function]}
+    >
+      <button
+        onClick={[Function]}
+        type="button"
+      >
+        Edit
+      </button>
+      <button
+        onClick={[Function]}
+        type="button"
+      >
+        Delete
+      </button>
+    </Dialog>
+    <Card__PopUpMenuButton
+      onClick={[Function]}
+    >
+      ...
+    </Card__PopUpMenuButton>
+    <Image
+      width="300px"
+    />
+  </Card__CardImageWrapper>
+  <Card__CardTitle>
+    <Card__CardDescription />
+  </Card__CardTitle>
+  <Card__CardYear />
+</Card__CardWrapper>
+`;

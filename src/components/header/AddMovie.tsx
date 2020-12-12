@@ -7,6 +7,14 @@ import {
   Button, Dialog, Field, FormControl,
 } from '../../uiKit';
 
+export const addMovieValidator = (values: {title: string}): {title?: string} => {
+  const errors: {title?: string} = {};
+  if (!values.title) {
+    errors.title = 'Required';
+  }
+  return errors;
+};
+
 type AddMovieProps = {
   showAddMovie: boolean;
   toggleShowAddMovie: () => void;
@@ -23,18 +31,8 @@ export const AddMovie: FC<AddMovieProps> = ({ showAddMovie, toggleShowAddMovie, 
     runtime: '',
   };
 
-  const addMovieValidator = (values) => {
-    const errors: {title?: string} = {};
-    if (!values.title) {
-      errors.title = 'Required';
-    }
-    return errors;
-  };
-
   const addMovieOnSubmit = (values, { setSubmitting }) => {
-    addMovieData(values).finally(() => {
-      setSubmitting(false);
-    });
+    addMovieData(values).finally(() => { setSubmitting(false); });
   };
 
   return (

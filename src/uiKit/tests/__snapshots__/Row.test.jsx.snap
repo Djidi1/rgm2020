@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UI-Kit Row is expected to render successfully 1`] = `
+<div
+  className="Row-sc-1g9of81-0 buElqX"
+/>
+`;

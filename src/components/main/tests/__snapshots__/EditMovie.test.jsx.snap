@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditMovie is expected to render successfully 1`] = `
+<div
+  className="Dialog__DialogModal-sc-3qcoit-0 cndQDb"
+>
+  <div
+    className="Dialog__DialogWrapper-sc-3qcoit-1 hLvUCg"
+  >
+    <button
+      className="Dialog__DialogCloseButton-sc-3qcoit-3 foHsOM"
+    >
+      X
+    </button>
+    <h1
+      className="Dialog__DialogTitle-sc-3qcoit-2 kbzahH"
+    >
+      Edit movie
+    </h1>
+    <div
+      className="Dialog__DialogBody-sc-3qcoit-4 dyCeVH"
+    >
+      <form
+        action="#"
+        onReset={[Function]}
+        onSubmit={[Function]}
+      >
+        <div
+          className="FormControl-sc-1epu8gc-0 jjIxXR"
+        >
+          <input
+            className="Field-sc-1e9avp0-1 bUmsZj"
+            name="id"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="hidden"
+          />
+        </div>
+        <div
+          className="FormControl-sc-1epu8gc-0 jjIxXR"
+        >
+          <label
+            className="Field__Label-sc-1e9avp0-0 fTufzV"
+          >
+            Title
+          </label>
+          <input
+            className="Field-sc-1e9avp0-1 bUmsZj"
+            name="title"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="Title here"
+            type="text"
+          />
+        </div>
+        <div
+          className="FormControl-sc-1epu8gc-0 jjIxXR"
+        >
+          <label
+            className="Field__Label-sc-1e9avp0-0 fTufzV"
+          >
+            Release date
+          </label>
+          <input
+            className="Field-sc-1e9avp0-1 bUmsZj"
+            name="release_date"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="Select Date"
+            type="date"
+          />
+        </div>
+        <div
+          className="FormControl-sc-1epu8gc-0 jjIxXR"
+        >
+          <label
+            className="Field__Label-sc-1e9avp0-0 fTufzV"
+          >
+            Movie URL
+          </label>
+          <input
+            className="Field-sc-1e9avp0-1 bUmsZj"
+            name="poster_path"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="Movie URL here"
+            type="text"
+          />
+        </div>
+        <div
+          className="FormControl-sc-1epu8gc-0 jjIxXR"
+        >
+          <label
+            className="Field__Label-sc-1e9avp0-0 fTufzV"
+          >
+            Genre
+          </label>
+          <select
+            className="Field-sc-1e9avp0-1 bUmsZj"
+            multiple={true}
+            name="genres"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="Genre here"
+          >
+            <option>
+              Comedy
+            </option>
+            <option>
+              Drama
+            </option>
+            <option>
+              Romance
+            </option>
+          </select>
+        </div>
+        <div
+          className="FormControl-sc-1epu8gc-0 jjIxXR"
+        >
+          <label
+            className="Field__Label-sc-1e9avp0-0 fTufzV"
+          >
+            Overview
+          </label>
+          <input
+            className="Field-sc-1e9avp0-1 bUmsZj"
+            name="overview"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="Overview here"
+            type="text"
+          />
+        </div>
+        <div
+          className="FormControl-sc-1epu8gc-0 jjIxXR"
+        >
+          <label
+            className="Field__Label-sc-1e9avp0-0 fTufzV"
+          >
+            Runtime
+          </label>
+          <input
+            className="Field-sc-1e9avp0-1 bUmsZj"
+            name="runtime"
+            onBlur={[Function]}
+            onChange={[Function]}
+            placeholder="Runtime here"
+            type="number"
+          />
+        </div>
+        <button
+          className="Button-pmfev1-0 jeuPdg"
+          type="reset"
+        >
+          Reset
+        </button>
+        <button
+          className="Button-pmfev1-0 iHLxvC"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;
