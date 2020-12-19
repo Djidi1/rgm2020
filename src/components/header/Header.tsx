@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, ErrorMessage } from 'formik';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ import {
   Field,
 } from '../../uiKit';
 import Logo from '../../img/logo.png';
-import useToggle from '../../helpers/hooks';
+// import useToggle from '../../helpers/hooks';
 
 const HeadWrapper = styled.div`
   background: grey;
@@ -31,7 +31,7 @@ const HeaderTitle = styled.h1`
 export const Header: FC = () => {
   const history = useHistory();
   const { searchQuery } = useParams();
-  const [showAddMovie, toggleShowAddMovie] = useToggle(false);
+  const [showAddMovie, toggleShowAddMovie] = useState(false);
 
   const initValues = {
     search_movie: searchQuery,
@@ -51,7 +51,10 @@ export const Header: FC = () => {
 
   return (
     <HeadWrapper>
-      <DialogAddMovie showAddMovie={showAddMovie} toggleShowAddMovie={toggleShowAddMovie} />
+      <DialogAddMovie
+        showAddMovie={showAddMovie}
+        toggleShowAddMovie={() => toggleShowAddMovie(false)}
+      />
       <Container>
         <Row>
           <Col width="75%">
@@ -60,7 +63,7 @@ export const Header: FC = () => {
             </Link>
           </Col>
           <Col width="25%" align="right">
-            <Button onClick={toggleShowAddMovie}>+ add movie</Button>
+            <Button onClick={() => toggleShowAddMovie(true)}>+ add movie</Button>
           </Col>
         </Row>
         <Row margin="0 2em">

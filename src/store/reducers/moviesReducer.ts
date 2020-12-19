@@ -1,4 +1,4 @@
-const initState = {
+export const initState = {
   loading: false,
   movies: {},
 };

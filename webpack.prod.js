@@ -2,25 +2,26 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { SourceMapDevToolPlugin } = require('webpack');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
-    app: './src/index.tsx',
+    app: './src/client.tsx',
+    components: './src/components/index.ts',
   },
-  target: 'web',
   resolve: {
     extensions: ['.tsx', '.jsx', '.ts', '.js'],
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: '9000',
+    contentBase: './dist',
+    port: '8000',
+    historyApiFallback: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: './index.html',
+    new SourceMapDevToolPlugin({
+      filename: '[file].map',
     }),
   ],
   output: {
@@ -36,12 +37,17 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
+        enforce: 'pre',
+        use: ['source-map-loader', 'babel-loader'],
         exclude: /node_modules/,
-        use: 'ts-loader',
       },
       {
         test: /\.html$/,
-        use: 'html-loader',
+        use: [
+          {
+            loader: 'html-loader',
+          },
+        ],
       },
       {
         test: /\.s?css$/,
@@ -55,7 +61,7 @@ module.exports = {
               },
             },
           },
-          'sass-loader',
+          { loader: 'sass-loader', options: { sourceMap: true } },
         ],
       },
       {

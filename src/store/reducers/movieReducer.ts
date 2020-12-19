@@ -1,4 +1,4 @@
-const initState = {
+export const initState = {
   loading: true,
   movie: {},
   delete_loading: true,

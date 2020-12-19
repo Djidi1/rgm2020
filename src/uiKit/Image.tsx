@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import LazyLoad from 'react-lazyload';
+// import LazyLoad from 'react-lazyload';
 import styled from 'styled-components';
 import no_picture from '../img/No_Picture.jpg';
 
@@ -17,11 +17,13 @@ const image: FC<MainProps> = ({ url, ...props }) => {
     element.target.src = no_picture;
   };
 
-  return (
-    <LazyLoad height={320}>
-      <img src={url} alt="img" onError={addDefaultSrc} {...props} />
-    </LazyLoad>
-  );
+  return <img src={url} alt="img" onError={addDefaultSrc} {...props} />;
+
+  // return (
+  //   <LazyLoad height={320}>
+  //     <img src={url} alt="img" onError={addDefaultSrc} {...props} />
+  //   </LazyLoad>
+  // );
 };
 
 const Image = styled(image)<ImageProps>`
