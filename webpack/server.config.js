@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const webpackNodeExternals = require('webpack-node-externals');
+const LoadablePlugin = require('@loadable/webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
   // entry: ['webpack-hot-middleware/client?reload=true', path.join(__dirname, './src/server')],
-  entry: [path.join(__dirname, './src/server')],
-  externals: [webpackNodeExternals()],
+  entry: [path.join(__dirname, '../src/server')],
+  externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
   output: {
-    path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
+    path: path.join(__dirname, '../dist'),
+    filename: 'main.js',
     publicPath: '/static/',
+    globalObject: 'this',
   },
   resolve: {
     extensions: ['.tsx', '.jsx', '.ts', '.js'],
@@ -21,15 +23,22 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        enforce: 'pre',
-        use: ['source-map-loader', 'babel-loader'],
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { modules: false }], '@babel/react'],
+          },
+        },
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { modules: false }], '@babel/react'],
+          },
         },
       },
       {
@@ -60,8 +69,11 @@ module.exports = {
       },
     ],
   },
-  plugins: [new MiniCssExtractPlugin({
-    filename: 'style.css',
-    chunkFilename: '[name].css',
-  })],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+      chunkFilename: '[name].css',
+    }),
+    new LoadablePlugin(),
+  ],
 };

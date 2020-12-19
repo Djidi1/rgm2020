@@ -33,6 +33,10 @@ export const Header: FC = () => {
   const { searchQuery } = useParams();
   const [showAddMovie, toggleShowAddMovie] = useState(false);
 
+  const handleToggle = (data) => {
+    console.log(data);
+  };
+
   const initValues = {
     search_movie: searchQuery,
   };
@@ -63,7 +67,7 @@ export const Header: FC = () => {
             </Link>
           </Col>
           <Col width="25%" align="right">
-            <Button onClick={() => toggleShowAddMovie(true)}>+ add movie</Button>
+            <Button onClick={() => handleToggle(true)}>+ add movie</Button>
           </Col>
         </Row>
         <Row margin="0 2em">

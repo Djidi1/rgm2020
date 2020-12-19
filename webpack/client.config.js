@@ -1,32 +1,29 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { SourceMapDevToolPlugin } = require('webpack');
 
 module.exports = {
-  mode: 'production',
-  entry: {
-    app: './src/client.tsx',
-    components: './src/components/index.ts',
-  },
+  mode: 'development',
+  entry: [path.join(__dirname, '../src/client')],
+  target: 'web',
   resolve: {
     extensions: ['.tsx', '.jsx', '.ts', '.js'],
+    fallback: {
+      util: require.resolve('util/'),
+    },
   },
   devServer: {
-    contentBase: './dist',
+    contentBase: path.resolve(__dirname, '../dist'),
     port: '8000',
-    historyApiFallback: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new SourceMapDevToolPlugin({
-      filename: '[file].map',
-    }),
   ],
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/',
+    globalObject: 'this',
   },
   optimization: {
     splitChunks: {
@@ -37,17 +34,27 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        enforce: 'pre',
-        use: ['source-map-loader', 'babel-loader'],
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { modules: false }], '@babel/react'],
+          },
+        },
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { modules: false }], '@babel/react'],
+          },
+        },
       },
       {
         test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
+        use: 'html-loader',
       },
       {
         test: /\.s?css$/,
@@ -61,7 +68,7 @@ module.exports = {
               },
             },
           },
-          { loader: 'sass-loader', options: { sourceMap: true } },
+          'sass-loader',
         ],
       },
       {
