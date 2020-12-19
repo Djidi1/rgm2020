@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
+import url from 'url';
+import path from 'path';
 import '@babel/polyfill';
+import express from 'express';
+import React from 'react';
+import { matchPath, StaticRouter } from 'react-router';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import express from 'express';
-import React from 'react';
-import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { ServerStyleSheet } from 'styled-components';
@@ -29,67 +31,64 @@ app.use((req, res) => {
   console.log('req', req.url);
   const location = req.url;
   const { store } = configureStore(getInitialState(location), location);
+  const context = {};
   const sheet = new ServerStyleSheet();
 
   store
     .runSaga(rootSaga)
     .toPromise()
     .then(() => {
-      console.log('sagas complete');
-      // const appMarkup = renderToString(sheet.collectStyles(
-      //   <StaticRouter location={req.url} context={{}}>
-      //     <Provider store={store}>
-      //       <App route={Routes} />
-      //     </Provider>
-      //   </StaticRouter>,
-      // ));
-      // const styles = sheet.getStyleTags();
-      // const html = Html({ styles, body: appMarkup, initialState: store.getState() });
-
-      store.close();
-      res.send('html');
-      // res.send(html);
+      const appMarkup = renderToString(sheet.collectStyles(
+        <StaticRouter location={req.url} context={context}>
+          <Provider store={store}>
+            <App route={Routes} />
+          </Provider>
+        </StaticRouter>,
+      ));
+      if (context.url) {
+        res.redirect(context.url);
+        return;
+      }
+      const styles = sheet.getStyleTags();
+      const html = Html({ styles, body: appMarkup, initialState: store.getState() });
+      if (location.includes('.css')) {
+        res.sendFile(path.join(__dirname, location));
+      } else {
+        res.send(html);
+      }
     })
-    .catch((e) => {
-      console.log(e.message);
-      res.status(500).send(e.message);
+    .catch((err) => {
+      throw err;
     });
-/*
-  // Note that req.url here should be the full URL path from
-  // the original request, including the query string.
-  const { path: { component: Component } } = matchPath(req.url, routes);
 
-  // match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-  //   if (error) {
-  //     res.status(500).send(error.message);
-  //   } else if (redirectLocation) {
-  //     res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-  //   } else if (renderProps && renderProps.components) {
-  const rootComp = <Root store={store} routes={routes}><Component /></Root>;
-
-  store.runSaga(rootSaga).toPromise().then(() => {
-    console.log('sagas complete');
-    res.status(200).send(
-      layout(
-        renderToString(rootComp),
-        JSON.stringify(store.getState()),
-      ),
+  const dataRequirements = [];
+  Routes.routes.some((route) => {
+    const { fetchData: fetchMethod } = route;
+    const { query } = url.parse(location);
+    const payload = (query) ? JSON.parse(`{"${query.replace(/&/g, '","').replace(/=/g, '":"')}"}`, (key, value) => (key === '' ? value : decodeURIComponent(value))) : '';
+    const match = matchPath(
+      url.parse(location).pathname,
+      route,
     );
-  }).catch((e) => {
-    console.log(e.message);
-    res.status(500).send(e.message);
+
+    if (match && fetchMethod) {
+      dataRequirements.push(
+        fetchMethod({
+          dispatch: store.dispatch,
+          match,
+          payload,
+        }),
+      );
+    }
+
+    return Boolean(match);
   });
 
-  renderToString(rootComp);
-  store.close();
-
-  // res.status(200).send(layout('','{}'))
-  //   } else {
-  //     res.status(404).send('Not found');
-  //   }
-  // });
-
-  */
+  return Promise.all(dataRequirements)
+    .then(() => store.close())
+    .catch((err) => {
+      throw err;
+    });
 });
 
 app.listen(port, (error) => {

@@ -5,6 +5,7 @@ const Html = ({ body, initialState, styles }) => (`
     <meta charSet="UTF-8" />
     <title>Server Side Rendered React App!!</title>
     ${styles}
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
   </head>
   <body>
   ${body}

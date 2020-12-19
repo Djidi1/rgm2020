@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Switch } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
-import './styles.scss';
+import './css/styles.scss';
 import { Footer } from './components';
 import MainLayout from './components/layouts/MainLayout';
 import ErrorBoundary from './helpers/ErrorBaundery';
