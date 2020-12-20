@@ -15,7 +15,7 @@ type AppProps = {
 
 const App: FC<AppProps> = ({ route }) => {
   return (
-    <>
+    <div className="app">
       <MainLayout>
         <ErrorBoundary>
           <Switch>
@@ -27,7 +27,7 @@ const App: FC<AppProps> = ({ route }) => {
         </ErrorBoundary>
         <Footer />
       </MainLayout>
-    </>
+    </div>
   );
 };
 

@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "@hot-loader/react-dom": "^17.0.1",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",
@@ -38,11 +39,8 @@
     "regenerator-runtime": "^0.13.7",
     "reselect": "^4.0.0",
     "styled-components": "^5.2.1",
-    "util": "^0.12.3",
-    "webpack": "^5.3.2",
-    "webpack-dev-middleware": "^4.0.2",
-    "webpack-hot-middleware": "^2.25.0",
-    "webpack-node-externals": "^2.5.2"
+    "tsconfig-paths-webpack-plugin": "^3.3.0",
+    "util": "^0.12.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -85,12 +83,16 @@
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.7",
     "typescript": "^4.0.5",
+    "webpack": "^4.44.2",
     "webpack-cli": "^4.1.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-middleware": "^4.0.2",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "start:webpack": "webpack --watch --config ./webpack.config.js",
-    "start:server": "nodemon index.js --watch dist/main.js",
+    "start:webpack": "webpack --watch",
+    "start:server": "nodemon index.js --watch dist/server.js",
     "start": "NODE_ENV=development npm-run-all --print-label --parallel start:*",
     "dev": "webpack --config webpack/client.config.js",
     "prod": "cross-env NODE_ENV=production webpack",

@@ -1,18 +1,14 @@
 {
     "compilerOptions": {
-        "outDir": "./built",
-        "allowJs": true,
-        "module": "es6",
-        "moduleResolution": "node",
-        "target": "es6",
-        "jsx": "react",
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "typeRoots" : ["node_modules/@types", "src/types"]
-    },
-    "include": [
-        "./src/**/*"
-    ],
-    "exclude": [
-      "./node_modules/**/*"
-    ]
+        "module": "commonjs",
+        "target": "es5",
+        "jsx": "react",
+        "baseUrl": "src"
+    }
 }

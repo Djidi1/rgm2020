@@ -3,22 +3,26 @@ const path = require('path');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  // entry: ['webpack-hot-middleware/client?reload=true', path.join(__dirname, './src/server')],
-  entry: [path.join(__dirname, '../src/server')],
+  name: 'server',
+  target: 'node',
+  node: { __dirname: false, __filename: false },
+  entry: [path.join(__dirname, '../src/server.js')],
   externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: 'main.js',
-    publicPath: '/static/',
-    globalObject: 'this',
+    filename: 'server.js',
+    publicPath: '/',
+    libraryTarget: 'commonjs2',
   },
   resolve: {
-    extensions: ['.tsx', '.jsx', '.ts', '.js'],
-    fallback: { path: require.resolve('path-browserify') },
+    modules: ['src', 'node_modules'],
+    extensions: ['*', '.js', '.jsx', '.json', '.ts', '.tsx'],
+    plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -76,4 +80,5 @@ module.exports = {
     }),
     new LoadablePlugin(),
   ],
+  optimization: { nodeEnv: false },
 };

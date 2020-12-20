@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import url from 'url';
 import path from 'path';
 import React from 'react';
@@ -6,7 +7,7 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { ChunkExtractor } from '@loadable/server';
 import { ServerStyleSheet } from 'styled-components';
-import App from './App.tsx';
+import App from './App';
 import Routes from './Routes';
 import configureStore from './store/configureStore';
 import rootSaga from './store/sagas';
@@ -36,7 +37,7 @@ export default ((req, res) => {
         return;
       }
       const styles = sheet.getStyleTags();
-      const statsFile = path.resolve('./build/loadable-stats.json');
+      const statsFile = path.resolve('./dist/loadable-stats.json');
       const chunkExtractor = new ChunkExtractor({ statsFile });
       const html = Html({
         styles, body, initialState: store.getState(), chunkExtractor,
