@@ -19,7 +19,7 @@ const Html = ({
   </div>
   <script>window.APP_STATE=${JSON.stringify(initialState)}</script>
   ${scriptTags}
-  <script type="module" src="/server.js"></script>
+  <script type="module" src="/main.js"></script>
   </body>
   </html>
 `);

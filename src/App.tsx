@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { Switch } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
+import { Switch, Route } from 'react-router-dom';
 import './css/styles.scss';
 import { Footer } from './components';
 import MainLayout from './components/layouts/MainLayout';
@@ -19,10 +18,14 @@ const App: FC<AppProps> = ({ route }) => {
       <MainLayout>
         <ErrorBoundary>
           <Switch>
-            {renderRoutes(route.routesHeader)}
+            {route.routesHeader.map(({ fetchData, ...routeProps }) => (
+              <Route key={routeProps.path} {...routeProps} />
+            ))}
           </Switch>
           <Switch>
-            {renderRoutes(route.routes)}
+            {route.routes.map(({ fetchData, ...routeProps }) => (
+              <Route key={routeProps.path} {...routeProps} />
+            ))}
           </Switch>
         </ErrorBoundary>
         <Footer />

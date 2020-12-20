@@ -48,6 +48,10 @@ export default {
     }, {
       component: Main,
       path: '/search/:searchQuery',
+      fetchData({ dispatch, match }) {
+        console.log(match);
+        dispatch(getMovies(match.params));
+      },
     }, {
       component: Page404,
     },

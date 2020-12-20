@@ -9,7 +9,6 @@ import fetch from 'node-fetch';
 const backEndURL = 'http://localhost:4000';
 
 function* fetchMovies(data) {
-  console.log(data);
   const {
     genre,
     sortBy,
@@ -26,7 +25,7 @@ function* fetchMovies(data) {
 }
 
 function* getMovie(data) {
-  const { filmId } = data.payload;
+  const filmId = data.payload.filmId || data.payload.id;
   try {
     const json = yield fetch(`${backEndURL}/movies/${filmId}`)
       .then((response) => response.json());
