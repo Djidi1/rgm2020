@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import no_picture from '../img/No_Picture.jpg';
 
-interface ImageProps {
+export interface ImageProps {
   width?: string,
   height?: string,
 }

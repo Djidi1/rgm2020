@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface ButtonProps {
+export interface ButtonProps {
   primary?: boolean,
   withBorder?: boolean,
 }
@@ -16,6 +16,10 @@ const Button = styled.button<ButtonProps>`
   text-transform: uppercase;
   &:hover {
     opacity: 0.9;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 `;
 

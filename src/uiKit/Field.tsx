@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Field as FormikField } from 'formik';
 import styled from 'styled-components';
 
-type MainProps = {
+export type FieldProps = {
   type: string,
   formik?: boolean,
   value?: string,
@@ -20,11 +20,17 @@ const Label = styled.label`
     font-size: 0.9rem;
 `;
 
-// id: 1607065154583
+export type FormikFieldProps = {
+  type: string,
+  className: string,
+  name: string,
+  placeholder: string,
+  options: string[],
+};
 
 const FormikFieldType = ({
   type, className, name, placeholder, options,
-}) => (type === 'select'
+}: FormikFieldProps) => (type === 'select'
   ? (
     <FormikField
       as={type}
@@ -44,7 +50,7 @@ const FormikFieldType = ({
     />
   ));
 
-const field: FC<MainProps> = ({
+const field: FC<FieldProps> = ({
   formik = false,
   type,
   name,
