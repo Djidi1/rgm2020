@@ -52,6 +52,7 @@ const FormikFieldType = ({
     />
   ));
 
+// PATTERN: JSX spread attributes
 const field: FC<FieldProps> = ({
   formik = false,
   type,
@@ -67,6 +68,7 @@ const field: FC<FieldProps> = ({
   <>
     {label && <Label>{label}</Label>}
     {!formik ? (
+      // PATTERN: Merge destructured props with other values
       <input
         className={className}
         name={name}

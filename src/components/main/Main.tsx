@@ -94,6 +94,7 @@ interface MainProps {
 // PATTERN: Container component
 const MoviesList = (movies: MoviesProps[]) => (
   <>
+    {/* PATTERN: Conditional rendering */}
     {movies?.length ? movies.map((movie) => (
       <Link key={movie.id} to={`/film/${movie.id}`}>
         <Card movie={movie} />
@@ -158,6 +159,7 @@ const mapDispatchToProps = {
   getMoviesData: getMovies,
 };
 
+// PATTERN: Destructuring props
 const mapStateToProps = ({ movies }) => ({
   movies: movies.movies.data,
   loading: movies.loading,

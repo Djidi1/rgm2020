@@ -14,16 +14,13 @@ type MainProps = {
   height?: string,
 };
 
-const image: FC<MainProps> = ({ url, width = '100%', height = 'auto' }) => {
+const image: FC<MainProps> = ({ url, width = '100%', height = 'auto' }) => <img src={url} alt="img" width={width} height={height} />
 
-  return <img src={url} alt="img" width={width} height={height} />;
-
-  // return (
-  //   <LazyLoad height={320}>
-  //     <img src={url} alt="img" onError={addDefaultSrc} {...props} />
-  //   </LazyLoad>
-  // );
-};
+// return (
+//   <LazyLoad height={320}>
+//     <img src={url} alt="img" onError={addDefaultSrc} {...props} />
+//   </LazyLoad>
+// );
 
 const Image = styled(image)<ImageProps>`
   width: ${({ width }) => width || '100%'};

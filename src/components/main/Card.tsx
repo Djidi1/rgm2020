@@ -105,6 +105,7 @@ const Card: FC<MainProps> = ({ movie }) => {
         <Image url={posterPath} width="100%" height="auto" />
       </CardImageWrapper>
       <CardTitle>
+        {/* // PATTERN: Expressions  */}
         {title}
         <CardDescription>{genres.join(', ')}</CardDescription>
       </CardTitle>
