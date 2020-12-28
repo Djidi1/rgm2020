@@ -44,6 +44,8 @@ export default ((req, res) => {
       });
       if (location.includes('.css')) {
         res.sendFile(path.join(__dirname, location));
+      } else if (location.includes('.txt')) {
+        res.sendFile(path.join(__dirname, location));
       } else {
         res.status(context.statusCode || 200).send(html);
       }

@@ -44,7 +44,6 @@ const CardWrapper = styled.div`
 `;
 
 const CardImageWrapper = styled.div`
-  display: flex;
   position: relative;
   border: 1px solid grey;
   margin-bottom: 1em;
@@ -103,7 +102,7 @@ const Card: FC<MainProps> = ({ movie }) => {
           <button type="button" onClick={toggleShowDeleteMovie}>Delete</button>
         </Popup>
         <PopUpMenuButton onClick={toggleShowPopup}>...</PopUpMenuButton>
-        <Image url={posterPath} width="300px" />
+        <Image url={posterPath} width="100%" height="auto" />
       </CardImageWrapper>
       <CardTitle>
         {title}

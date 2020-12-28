@@ -34,6 +34,7 @@ const FormikFieldType = ({
   ? (
     <FormikField
       as={type}
+      title={placeholder}
       className={className}
       name={name}
       placeholder={placeholder}
@@ -44,6 +45,7 @@ const FormikFieldType = ({
   ) : (
     <FormikField
       type={type}
+      title={placeholder}
       className={className}
       name={name}
       placeholder={placeholder}

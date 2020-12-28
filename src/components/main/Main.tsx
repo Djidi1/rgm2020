@@ -77,17 +77,30 @@ const NoMovieFound = styled.h1`
   font-weight: 200;
 `;
 
-type MainProps = {
+interface MoviesProps {
+  id: number;
+  title: string;
+  genres: [];
+  poster_path: string;
+  release_date: string;
+}
+
+interface MainProps {
   getMoviesData: (payload: { genre: string }) => void;
   loading: boolean;
-  movies: [{
-    id: number;
-    title: string;
-    genres: [];
-    poster_path: string;
-    release_date: string;
-  }];
-};
+  movies?: MoviesProps[];
+}
+
+// PATTERN: Container component
+const MoviesList = (movies: MoviesProps[]) => (
+  <>
+    {movies?.length ? movies.map((movie) => (
+      <Link key={movie.id} to={`/film/${movie.id}`}>
+        <Card movie={movie} />
+      </Link>
+    )) : <NoMovieFound>No Movie Found</NoMovieFound>}
+  </>
+);
 
 export const Main: FC<MainProps> = (props) => {
   const {
@@ -109,12 +122,6 @@ export const Main: FC<MainProps> = (props) => {
     getMoviesData(payload);
   }, [genre, searchQuery]);
 
-  const content = movies?.length ? movies.map((movie) => (
-    <Link key={movie.id} to={`/film/${movie.id}`}>
-      <Card movie={movie} />
-    </Link>
-  )) : <NoMovieFound>No Movie Found</NoMovieFound>;
-
   return (
     <MainWrapper>
       <Row>
@@ -126,7 +133,7 @@ export const Main: FC<MainProps> = (props) => {
         <Col width="20%" align="right">
           <SortByStyled>
             Sort By
-            <select>
+            <select title="Sort By">
               <option>Release date</option>
             </select>
           </SortByStyled>
@@ -141,7 +148,7 @@ export const Main: FC<MainProps> = (props) => {
         </FilterResult>
       </Row>
       <Row margin="0 1em">
-        {loading ? 'Please wait...' : content}
+        {loading ? 'Please wait...' : <MoviesList movies={movies} />}
       </Row>
     </MainWrapper>
   );

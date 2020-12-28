@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   name: 'server',
   target: 'node',
   node: { __dirname: false, __filename: false },

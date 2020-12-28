@@ -4,7 +4,7 @@ const Html = ({
   const scriptTags = chunkExtractor.getScriptTags();
   return (`
   <!doctype html>
-  <html>
+  <html lang="en">
   <head>
     <meta charSet="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

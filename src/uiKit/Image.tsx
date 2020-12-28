@@ -10,14 +10,13 @@ export interface ImageProps {
 
 type MainProps = {
   url: string,
+  width?: string,
+  height?: string,
 };
 
-const image: FC<MainProps> = ({ url, ...props }) => {
-  const addDefaultSrc = (element) => {
-    element.target.src = no_picture;
-  };
+const image: FC<MainProps> = ({ url, width = '100%', height = 'auto' }) => {
 
-  return <img src={url} alt="img" onError={addDefaultSrc} {...props} />;
+  return <img src={url} alt="img" width={width} height={height} />;
 
   // return (
   //   <LazyLoad height={320}>
